@@ -1,26 +1,408 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg-light: #ffffff;
+  --color-bg-dark: #0a0a0a;
+  --color-text-light: #171717;
+  --color-text-dark: #ededed;
+
+  --color-indigo-600: #4f46e5;
+  --color-indigo-700: #4338ca;
+  --color-indigo-500: #6366f1;
+
+  --color-gray-600: #4b5563;
+  --color-gray-400: #9ca3af;
+  --color-gray-300: #d1d5db;
+
+  --font-sans: "Manrope", Arial, Helvetica, sans-serif;
+  --font-mono: "Fira Mono", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* body styles (пример, если нужно) */
+body {
+  background-color: var(--color-bg-light);
+  color: var(--color-text-light);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-dark);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Основной контейнер */
+.karaoke {
+  max-width: 36rem; /* 576px */
+  margin: 1rem auto;
+  background-color: var(--color-bg-light);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  color: var(--color-text-light);
+  font-family: var(--font-sans);
+}
+
+@media (prefers-color-scheme: dark) {
+  .karaoke {
+    background-color: var(--color-bg-dark);
+    border-color: var(--color-gray-600);
+    color: var(--color-text-dark);
+  }
+}
+
+/* Заголовок */
+.karaoke__header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.karaoke__title {
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.karaoke__artist {
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+  margin-top: 0.25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .karaoke__artist {
+    color: var(--color-gray-400);
+  }
+}
+
+/* Плеер */
+.karaoke__player {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.player__button {
+  width: 4rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--color-indigo-600);
+  color: white;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.25s ease;
+  padding: 0;            /* Убираем внутренние паддинги */
+  line-height: 1;        /* Убираем влияние line-height */
+  font-size: 0;          /* Убираем влияние размера шрифта на SVG */
+}
+
+.player__button svg {
+  display: block;        /* Убирает нижний пробел из inline-block */
+  width: 1.5rem;         /* Задаём желаемый размер иконке */
+  height: 1.5rem;
+}
+
+
+.player__button:hover {
+  background-color: var(--color-indigo-700);
+}
+
+.player__time {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  width: 3.5rem;
+  text-align: center;
+}
+
+.player__range {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  --progress-percent: 0%;
+  position: relative;
+}
+
+.player__range::-webkit-slider-runnable-track {
+  height: 8px;
+  background: linear-gradient(
+    to right,
+    var(--color-indigo-500) 0%,
+    var(--color-indigo-500) var(--progress-percent),
+    var(--color-gray-300) var(--progress-percent),
+    var(--color-gray-300) 100%
+  );
+  border-radius: 9999px;
+  border: none;
+}
+
+.player__range::-moz-range-track {
+  height: 8px;
+  background: var(--color-gray-300);
+  border-radius: 9999px;
+  border: none;
+}
+
+.player__range::-moz-range-progress {
+  background-color: var(--color-indigo-500);
+  border-radius: 9999px;
+  height: 8px;
+}
+
+.player__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 23px;
+  height: 23px;
+  background-color: var(--color-indigo-600);
+  border-radius: 9999px;
+  cursor: pointer;
+  margin-top: -8px;
+  box-shadow: 0 0 6px rgba(79, 70, 229, 0.7);
+  transition: background-color 0.3s, box-shadow 0.3s;
+  border: none;
+}
+
+.player__range:hover::-webkit-slider-thumb {
+  background-color: var(--color-indigo-700);
+  box-shadow: 0 0 12px rgba(67, 56, 202, 0.9);
+}
+
+.karaoke__lyrics {
+  max-height: 420px; /* или ваша высота раскрытия */
+  overflow-y: auto;
+  scrollbar-width: thin; /* для Firefox */
+  scrollbar-color: #6366f1 transparent; /* цвет ползунка и трека для Firefox */
+}
+
+/* Webkit-based browsers */
+.karaoke__lyrics::-webkit-scrollbar {
+  width: 1px;
+}
+
+.karaoke__lyrics::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.karaoke__lyrics::-webkit-scrollbar-thumb {
+  background-color: #6366f1;
+  border-radius: 1px;
+}
+
+
+.player__range::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-indigo-600);
+  border-radius: 9999px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 6px rgba(79, 70, 229, 0.7);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.player__range:hover::-moz-range-thumb {
+  background-color: var(--color-indigo-700);
+  box-shadow: 0 0 12px rgba(67, 56, 202, 0.9);
+}
+
+/* Кнопка-переключатель текста */
+.karaoke__toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--color-indigo-600);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-align: left;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  padding: 0;
+  user-select: none;
+  margin-bottom: 1rem;
+}
+
+.karaoke__toggle:focus {
+  outline: 2px solid var(--color-indigo-600);
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .karaoke__toggle {
+    color: var(--color-indigo-400);
+  }
+}
+
+/* Контейнер текста с высотой и плавным раскрытием */
+.karaoke__lyrics {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+}
+
+.karaoke__lyrics--open {
+  max-height: 1000px; /* В большом запасе, подстраивается под текст */
+}
+
+/* Строка текста */
+.karaoke__line {
+  margin: 0.2rem 0;
+  min-height: 1.6em;
+  transition: color 0.3s;
+  color: var(--color-gray-600);
+  font-size: 12px;
+}
+
+.karaoke__line--active {
+  color: var(--color-indigo-600);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .karaoke__line {
+    color: var(--color-gray-400);
+  }
+  .karaoke__line--active {
+    color: var(--color-indigo-400);
+  }
+}
+
+/* Мигающая палочка caret */
+.caret {
+  display: inline-block;
+  width: 3px;
+  height: 1.3em;
+  background-color: var(--color-indigo-500);
+  margin-left: 6px;
+  vertical-align: bottom;
+  animation: blink-caret 1s step-start infinite;
+  border-radius: 1px;
+}
+
+@keyframes blink-caret {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.karaoke__bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  margin-right: 8px;
+  vertical-align: middle;
+  height: 16px;
+  width: 24px;
+}
+
+.bar {
+  width: 4px;
+  background-color: #6366f1; /* indigo-500 */
+  animation: bounce 1.2s infinite ease-in-out;
+  border-radius: 2px;
+  transform-origin: bottom center;
+}
+
+/* Разные задержки для каждой палочки чтобы был эффект мурашек */
+.bar1 {
+  height: 4px;
+  animation-delay: 0s;
+}
+
+.bar2 {
+  height: 8px;
+  animation-delay: 0.15s;
+}
+
+.bar3 {
+  height: 12px;
+  animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+  0%, 40%, 100% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(1.8);
+  }
+}
+
+/* Ниже стили для кнопки и остальных элементов, ориентировочно */
+.karaoke__toggle {
+  cursor: pointer;
+  color: #6366f1;
+  font-weight: 600;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.karaoke__toggle:hover {
+  color: #4f46e5;
+}
+
+/* //выделение */
+
+.karaoke__line--active {
+  background-color: rgba(99, 102, 241, 0.1);
+  border-radius: 4px;
+  padding: 0 14px;
+}
+
+.karaoke__line {
+  margin: 0.2rem 0;
+  min-height: 1.6em;
+  transition: color 0.3s ease, font-weight 0.3s ease, transform 0.3s ease;
+}
+
+.karaoke__line--active {
+  color: var(--color-indigo-600);
+  font-weight: 700;
+  font-size: 1.125rem;
+  transform: scale(1.05);
+  transition: color 0.4s ease, font-weight 0.4s ease, transform 0.4s ease;
+  text-shadow: 0 0 6px rgba(99, 102, 241, 0.5);
+}
+
+/* Плавное мигание caret */
+.caret {
+  display: inline-block;
+  width: 3px;
+  height: 1.3em;
+  background-color: var(--color-indigo-500);
+  vertical-align: bottom;
+  border-radius: 1px;
+  animation: blink-caret 1.2s steps(1) infinite;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes blink-caret {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
 }
