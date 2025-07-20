@@ -1,0 +1,120 @@
+/* Всё как в Login.css, чтобы переиспользовать визуал */
+
+.login__roditel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Для Chrome, Safari, Edge автозаполнение */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #171717 inset !important;
+    -webkit-text-fill-color: #fff !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+  
+  .title {
+    font-weight: bolder;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .login__wrapper {
+    width: 400px;
+    height: auto; /* чуть подстроили под дополнительное поле */
+    border-radius: 8px;
+    color: #ffffff;
+  }
+  
+  .first-col,
+  .two-col {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .wrapper input {
+    width: 350px;
+    padding: 10px 20px;
+    height: 40px !important;
+    outline: none;
+    border-radius: 8px;
+    border: 1px solid #3a3a3a;
+    background-color: #171717;
+    color: #fff;
+  }
+  
+  input:focus {
+    caret-color: var(--color-indigo-600);
+    border: 2px solid var(--color-indigo-600);
+  }
+  
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logo img {
+    width: 48px;
+    height: 48px;
+  }
+  
+  label {
+    font-size: 16px;
+    margin-top: 1rem;
+    margin-bottom: 5px;
+  }
+  
+  .login {
+    width: 350px;
+    padding: 10px 20px;
+    height: 40px !important;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--color-indigo-600);
+    margin-top: 1.5rem;
+    color: #fff;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login:hover {
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .link {
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 1rem;
+  }
+  
+  .text__under {
+    color: var(--color-indigo-600);
+    cursor: pointer;
+  }
+  
+  .text__under:hover {
+    text-decoration: underline;
+  }
+  
+  
